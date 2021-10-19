@@ -39,11 +39,19 @@ print('\n##########\n')
 
 # Membandingkan beberapa kandungan dengan kualitas
 # figure dibawah ini membandingkan Sulphates terhadap Quality
-# kandungan sulphates dapat diganti ke kandungan yang lain selama tidak mengandung spasi pada penulisannya
 plt.figure(figsize=(10,10))
 x = wine_data.quality
 y = wine_data.sulphates
 plt.bar(x,y)
 plt.xlabel("Quality")
 plt.ylabel("Sulphates")
-plt.show()
+# plt.show()
+
+print('\n##########\n')
+
+plt.figure(figsize=(10,10))
+sns.barplot(x='quality',y='volatile acidity',data=wine_data)
+# plt.show()
+
+print('\n##########\n')
+

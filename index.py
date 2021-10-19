@@ -1,11 +1,15 @@
+# RED WINE PREDICTION
+
 # Library yang akan digunakan
-import numpy as np
-import pandas as pd
-import matplotlib.pyplot as plt
-import seaborn as sns
-from sklearn.model_selection import train_test_split
-from sklearn.ensemble import RandomForestClassifier
-from sklearn.metrics import accuracy_score
+# import numpy as np
+import pandas as pd # untuk analisa dan pengolahan data
+import matplotlib.pyplot as plt # sebagai visualisasi data
+import seaborn as sns # untuk membuat grafik dan statistik pada python
+
+# sklearn atau Scikit-learn berfungsi dalam pembuatan model machine learning
+from sklearn.model_selection import train_test_split # untuk melihat hasil dari performa model yang digunakan
+from sklearn.ensemble import RandomForestClassifier # Random Forest Clasification
+from sklearn.metrics import accuracy_score # untuk menentukan tingkat akurasi dari model yang digunakan
 
 wine_data = pd.read_csv('data_wine/winequality-red.csv') #mengambil file csv pada folder data_wine
 wine_data.head()
@@ -104,10 +108,12 @@ print('\n##########\n')
 
 # Menggunakan model untuk melakukan prediksi dan melakukan pengecekan tingkat akurasi
 train_pred = model.predict(X_train)
+print('Data Training: ')
 print(train_pred)
 Training_score = accuracy_score(train_pred,y_train) # melakukan perbandingan dengan y_train yang asli dan hasil prediksi lalu menghitung perbedaan/error
 print("Accuracy Score (Data Training):",Training_score) # output adalah hasil tingkat akurasi pada penggunaan data training
 print()
+print('Data Testing: ')
 test_pred = model.predict(X_test)
 print(test_pred)
 Test_score = accuracy_score(test_pred,y_test) 

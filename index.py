@@ -24,6 +24,7 @@ print(wine_data.isnull().sum())
 print('\n##########\n')
 
 # # Exploratory Data Analysis
+
 corr = wine_data.corr()
 plt.figure(figsize=(8,8))
 sns.heatmap(corr,cbar=True,square=True,fmt='.1f',annot=True,cmap='Reds')
@@ -67,3 +68,19 @@ print('\n##########\n')
 plt.figure(figsize=(10,10))
 sns.countplot(x="quality", data=wine_data)
 # plt.show()
+
+print('\n##########\n')
+
+# # Splitting Data
+
+# memisahkan kolom quality pada tabel dan memberikan label
+# 1 = good wine
+# 0 = bad wine
+X = wine_data.drop(['quality'],axis=1)
+y = wine_data['quality'].apply(lambda quality: 1 if quality >= 6 else 0)
+
+# memisahkan data menjadi training data dan testig data
+# 80% dari data akan digunakan sebagai training data dan 20% akan digunakan sebagai testing data
+X_train, X_test, y_train, y_test = train_test_split(X,y,test_size = 0.2, random_state = 2)
+print(X.shape,X_train.shape)
+

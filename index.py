@@ -28,8 +28,8 @@ print('\n##########\n')
 corr = wine_data.corr()
 plt.figure(figsize=(8,8))
 sns.heatmap(corr,cbar=True,square=True,fmt='.1f',annot=True,cmap='Reds')
+print('Figure 1. Diagram Heatmap')
 # plt.show()
-# hilangkan tag komentar pada plt.show untuk menampilkan diagram
 
 print('\n##########\n')
 
@@ -47,6 +47,7 @@ plt.bar(x,y)
 plt.xlabel("Quality")
 plt.ylabel("Sulphates")
 # plt.show()
+print('Figure 2. Diagram Bar')
 
 print('\n##########\n')
 
@@ -54,6 +55,7 @@ print('\n##########\n')
 plt.figure(figsize=(10,10))
 sns.barplot(x='quality',y='volatile acidity',data=wine_data)
 # plt.show()
+print('Figure 3. Diagram Barplot')
 
 print('\n##########\n')
 
@@ -61,13 +63,16 @@ print('\n##########\n')
 plt.figure(figsize=(10,10))
 sns.barplot(x='quality',y='pH',data=wine_data)
 # plt.show()
+print('Figure 4. Diagram Barplot')
 
 print('\n##########\n')
 
 # figure dibawah ini menghitung jumlah wine berdasarkan kualitas menggunakan count plot
 plt.figure(figsize=(10,10))
 sns.countplot(x="quality", data=wine_data)
-# plt.show()
+print('Figure 5. Diagram Countplot')
+plt.show()
+# Beritag komentar pada plt.show() diatas untuk menyembunyikan hasil diagram dan langsung melakukan Splitting Data
 
 print('\n##########\n')
 
@@ -95,3 +100,25 @@ print(model)
 
 print('\n##########\n')
 
+# # Prediction and Evaluation of the Model
+
+# Menggunakan model untuk melakukan prediksi dan melakukan pengecekan tingkat akurasi
+train_pred = model.predict(X_train)
+print(train_pred)
+Training_score = accuracy_score(train_pred,y_train) # melakukan perbandingan dengan y_train yang asli dan hasil prediksi lalu menghitung perbedaan/error
+print("Accuracy Score (Data Training):",Training_score) # output adalah hasil tingkat akurasi pada penggunaan data training
+print()
+test_pred = model.predict(X_test)
+print(test_pred)
+Test_score = accuracy_score(test_pred,y_test) 
+print("Accuracy Score (Data Testing):",Test_score)
+
+# # Kesimpulan
+# 1. Workflow pengerjaan = 
+#  # a. melakukan import terhadap library dan dataset yang akan digunakan
+#  # b. melakukan pengecekan jika terdapat missing data
+#  # c. melakukan Exploratry Data Analysis
+#  # d. melakukan split data terhadap beberapa variabel
+#  # d. melakukan improvisasi terhadap model
+# 2. Pada umumnya, tingkat akurasi 75% sudah cukup baik, tetapi masih bisa diperbaiki hingga mendapat tingkat akurasi yang lebih baik
+# 3. Hasil output dari Random Forest Clasification, dapat digunakan sebagai decision making, pada kasus ini, hasil output dapat digunakan untuk menentukan kombinasi yang akan digunakan dalam pembuatan Red Wine dengan kualitas terbaik

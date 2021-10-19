@@ -38,7 +38,7 @@ print(sorted(qs))
 print('\n##########\n')
 
 # Membandingkan beberapa kandungan dengan kualitas
-# figure dibawah ini membandingkan Sulphates terhadap Quality
+# figure dibawah ini membandingkan antara Sulphates terhadap Quality
 plt.figure(figsize=(10,10))
 x = wine_data.quality
 y = wine_data.sulphates
@@ -49,9 +49,21 @@ plt.ylabel("Sulphates")
 
 print('\n##########\n')
 
+# figure dibawah ini membandingkan antara volatile acidity terhadap Quality
 plt.figure(figsize=(10,10))
 sns.barplot(x='quality',y='volatile acidity',data=wine_data)
 # plt.show()
 
 print('\n##########\n')
 
+# figure dibawah ini membandingkan antara ph terhadap Quality
+plt.figure(figsize=(10,10))
+sns.barplot(x='quality',y='pH',data=wine_data)
+# plt.show()
+
+print('\n##########\n')
+
+# figure dibawah ini menghitung jumlah wine berdasarkan kualitas menggunakan count plot
+plt.figure(figsize=(10,10))
+sns.countplot(x="quality", data=wine_data)
+# plt.show()

@@ -1,7 +1,8 @@
 # RED WINE PREDICTION
 
 # Library yang akan digunakan
-import numpy as np
+from itertools import count
+# import numpy as np
 import pandas as pd # untuk analisa dan pengolahan data
 import matplotlib.pyplot as plt # sebagai visualisasi data
 import seaborn as sns # untuk membuat grafik dan statistik pada python
@@ -12,7 +13,7 @@ from sklearn.ensemble import RandomForestClassifier # Random Forest Clasificatio
 from sklearn.metrics import accuracy_score # untuk menentukan tingkat akurasi dari model yang digunakan
 from sklearn.metrics import classification_report
 from sklearn.metrics import confusion_matrix
-from mlxtend.plotting import plot_decision_regions
+# from mlxtend.plotting import plot_decision_regions
 
 wine_data = pd.read_csv('data_wine/winequality-red.csv') #mengambil file csv pada folder data_wine
 wine_data.head()
@@ -104,7 +105,7 @@ print('\n##########\n')
 # # Model Building
 
 # penggunaan random forest model
-model = RandomForestClassifier(random_state = 42) # deklarasi random forest
+model = RandomForestClassifier(random_state = 42, n_estimators=100, criterion='gini') # deklarasi random forest
 model.fit(X_train,y_train)
 print(model)
 

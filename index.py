@@ -1,7 +1,7 @@
 # RED WINE PREDICTION
 
 # Library yang akan digunakan
-# import numpy as np
+import numpy as np
 import pandas as pd # untuk analisa dan pengolahan data
 import matplotlib.pyplot as plt # sebagai visualisasi data
 import seaborn as sns # untuk membuat grafik dan statistik pada python
@@ -10,6 +10,9 @@ import seaborn as sns # untuk membuat grafik dan statistik pada python
 from sklearn.model_selection import train_test_split # untuk melihat hasil dari performa model yang digunakan
 from sklearn.ensemble import RandomForestClassifier # Random Forest Clasification
 from sklearn.metrics import accuracy_score # untuk menentukan tingkat akurasi dari model yang digunakan
+from sklearn.metrics import classification_report
+from sklearn.metrics import confusion_matrix
+from mlxtend.plotting import plot_decision_regions
 
 wine_data = pd.read_csv('data_wine/winequality-red.csv') #mengambil file csv pada folder data_wine
 wine_data.head()
@@ -24,6 +27,8 @@ wine_data.info()
 # wine_data.info()
 print('\nPengecekan terhadap nilai null\n')
 print(wine_data.isnull().sum())
+print('\nDeskripsi data: \n')
+print(wine_data.describe())
 
 print('\n##########\n')
 
@@ -75,7 +80,7 @@ print('\n##########\n')
 plt.figure(figsize=(10,10))
 sns.countplot(x="quality", data=wine_data)
 print('Figure 5. Diagram Countplot')
-plt.show()
+# plt.show()
 # Beritag komentar pada plt.show() diatas untuk menyembunyikan hasil diagram dan langsung melakukan Splitting Data
 
 print('\n##########\n')
@@ -90,15 +95,16 @@ y = wine_data['quality'].apply(lambda quality: 1 if quality >= 6 else 0)
 
 # memisahkan data menjadi training data dan testig data
 # 80% dari data akan digunakan sebagai training data dan 20% akan digunakan sebagai testing data
-X_train, X_test, y_train, y_test = train_test_split(X,y,test_size = 0.2, random_state = 2)
-print(X.shape,X_train.shape)
+X_train, X_test, y_train, y_test = train_test_split(X,y,test_size = 0.25, random_state = 42, stratify=y)
+print("(Total Data) (Data Test) (Data Train)")
+print(X.shape, X_test.shape, X_train.shape)
 
 print('\n##########\n')
 
 # # Model Building
 
 # penggunaan random forest model
-model = RandomForestClassifier() # deklarasi random forest
+model = RandomForestClassifier(random_state = 42) # deklarasi random forest
 model.fit(X_train,y_train)
 print(model)
 
@@ -107,17 +113,28 @@ print('\n##########\n')
 # # Prediction and Evaluation of the Model
 
 # Menggunakan model untuk melakukan prediksi dan melakukan pengecekan tingkat akurasi
+print('Random Forest Clasification Model 1')
 train_pred = model.predict(X_train)
 print('Data Training: ')
 print(train_pred)
 Training_score = accuracy_score(train_pred,y_train) # melakukan perbandingan dengan y_train yang asli dan hasil prediksi lalu menghitung perbedaan/error
 print("Accuracy Score (Data Training):",Training_score) # output adalah hasil tingkat akurasi pada penggunaan data training
 print()
+
 print('Data Testing: ')
 test_pred = model.predict(X_test)
 print(test_pred)
-Test_score = accuracy_score(test_pred,y_test) 
+
+Test_score = accuracy_score(test_pred,y_test)
 print("Accuracy Score (Data Testing):",Test_score)
+Classification_report = classification_report(test_pred,y_test)
+print("Classification Report (Data Testing): ")
+print(Classification_report)
+Confusion_matrix = confusion_matrix(test_pred, y_test)
+print("Confusion Matrix (Data Testing):")
+print(Confusion_matrix)
+
+print('\n##########\n')
 
 # # Kesimpulan
 # 1. Workflow pengerjaan = 
@@ -126,5 +143,5 @@ print("Accuracy Score (Data Testing):",Test_score)
 #  # c. melakukan Exploratry Data Analysis
 #  # d. melakukan split data terhadap beberapa variabel
 #  # d. melakukan improvisasi terhadap model
-# 2. Pada umumnya, tingkat akurasi 75% sudah cukup baik, tetapi masih bisa diperbaiki hingga mendapat tingkat akurasi yang lebih baik
+# 2. Pada umumnya, tingkat akurasi 75% - 80% sudah cukup baik, tetapi masih bisa diperbaiki hingga mendapat tingkat akurasi yang lebih baik
 # 3. Hasil output dari Random Forest Clasification, dapat digunakan sebagai decision making, pada kasus ini, hasil output dapat digunakan untuk menentukan kombinasi yang akan digunakan dalam pembuatan Red Wine dengan kualitas terbaik

@@ -146,6 +146,7 @@ cv = ShuffleSplit(n_splits = 5, test_size = 0.25, random_state = 42)
 
 grid = {
     'n_estimators' : [10, 100],
+    'random_state' : [42]
     # 'max_features': ['auto', 'sqrt'],
     # 'max_depth': [3, 5, 7, 9, 11, 15],
     # 'bootstrap': [True, False]

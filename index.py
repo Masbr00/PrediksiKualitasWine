@@ -9,11 +9,15 @@ import seaborn as sns # untuk membuat grafik dan statistik pada python
 
 # sklearn atau Scikit-learn berfungsi dalam pembuatan model machine learning
 from sklearn.model_selection import train_test_split # untuk melihat hasil dari performa model yang digunakan
+from sklearn.model_selection import ShuffleSplit
+from sklearn.model_selection import cross_val_score
+from sklearn.model_selection import GridSearchCV
+from sklearn.tree import DecisionTreeClassifier
 from sklearn.ensemble import RandomForestClassifier # Random Forest Clasification
+from sklearn.svm import SVC
 from sklearn.metrics import accuracy_score # untuk menentukan tingkat akurasi dari model yang digunakan
 from sklearn.metrics import classification_report
 from sklearn.metrics import confusion_matrix
-# from mlxtend.plotting import plot_decision_regions
 
 wine_data = pd.read_csv('data_wine/winequality-red.csv') #mengambil file csv pada folder data_wine
 wine_data.head()
@@ -114,7 +118,7 @@ print('\n##########\n')
 # # Prediction and Evaluation of the Model
 
 # Menggunakan model untuk melakukan prediksi dan melakukan pengecekan tingkat akurasi
-print('Random Forest Clasification Model 1')
+print('### Random Forest Clasification Model 1 ###')
 train_pred = model.predict(X_train)
 print('Data Training: ')
 print(train_pred)
@@ -136,6 +140,32 @@ print("Confusion Matrix (Data Testing):")
 print(Confusion_matrix)
 
 print('\n##########\n')
+
+print('### Random Forest Clasification Model 2 ###')
+cv = ShuffleSplit(n_splits = 5, test_size = 0.25, random_state = 42)
+
+grid = {
+    'n_estimators' : [10, 100],
+    # 'max_features': ['auto', 'sqrt'],
+    # 'max_depth': [3, 5, 7, 9, 11, 15],
+    # 'bootstrap': [True, False]
+}
+rf = RandomForestClassifier()
+rf_random = GridSearchCV(estimator=rf, param_grid=grid, cv = 3, verbose=2, n_jobs = -1)
+rf_random.fit(X_train, y_train)
+
+test_pred2 = rf_random.predict(X_test)
+
+Test_score2 = accuracy_score(test_pred2,y_test)
+print("Accuracy Score:",Test_score2)
+
+class_report = classification_report(test_pred2,y_test)
+print("Classification Report (Data Testing): ")
+print(class_report)
+
+conf_matrix = confusion_matrix(test_pred2, y_test)
+print('Confusion Matrix: ')
+print(conf_matrix)
 
 # # Kesimpulan
 # 1. Workflow pengerjaan = 
